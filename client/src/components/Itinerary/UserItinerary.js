@@ -81,12 +81,12 @@ class UserItinerary extends Component {
         <div id="itineraryContainer" className="container rounded mt-1">
           <div className="row">   
             <ProfilePicture username={username} userimage={userimage} />
-            <h3 id={"itineraryTitle"} cassName="ml-1 col-4 pt-2">{title}</h3>
+            <h3 id={"itineraryTitle"} className="ml-1 col-4 pt-2 pl-3">{title}</h3>
 
             <Likes className="col-4 mt-5" likes={likes} />
             <Duration className="col-4" duration={duration} />
-            <span color="#fff">{priceRange}</span>
-            <span className="comments">{hashtags}</span>
+            <span color="#fff" className="col-4 text-white">{priceRange}</span>
+            <span className="comments text-white pl-4 mt-2">{hashtags}</span>
           </div>
           <Accordion>
             <Accordion.Toggle className="toggleDeco"
@@ -94,10 +94,10 @@ class UserItinerary extends Component {
                 filteredActivities == "" ? requestActivities(title) : null
               }
               eventKey="0"
-            > <FaIconPack className="toggleDeco mr-2" font-size="7vh"/>
+            > <FaIconPack className="toggleDeco mr-2 row" font-size="7vh"/>
          
             </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
+            <Accordion.Collapse eventKey="0" className="column">
               <div>
                 <Activities
                   activities={

@@ -29,7 +29,7 @@ class CarouselNav extends Component {
         <h1 className={"display-6"}>Most Popular MYtineraries</h1>
         <CarouselBoots>
           {quadrupleCarouselItems.map(item => (
-            <CarouselBoots.Item className="container">
+            <CarouselBoots.Item className="container-fluid">
               <div className={"col-12 row align-items-center"}>
                 {/* <Price></Price> */}
                 {item.map((ciudad, index) => (

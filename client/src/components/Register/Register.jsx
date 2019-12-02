@@ -15,9 +15,7 @@ class Register extends Component {
     console.log(this.state)
     }
 
-  /*handleChange(event) {
-    
-  }*/
+
 
   handleSubmit(event) {
     event.preventDefault();
