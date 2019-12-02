@@ -16,6 +16,8 @@ import { reduxFetch } from "./store/actions/reduxFetch";
 import {requestData, requestDataSuccess } from "./store/actions/cityActions"
 import { requestItineraries, requestItinerariesSuccess } from "./store/actions/itineraryActions";
 import RegisterContainer from './components/Register/RegisterContainer'
+import CarouselIt from './components/carouselIt';
+
 const mapStateToProps = state => {
   return {
     reduxNavData: state.nav.navData,
@@ -54,6 +56,7 @@ class App extends Component {
       <div className="App">
         <Route path="" component={NavBar}></Route>
         <Route path="" component={Header}></Route>
+
         <Switch>
           <BrowsingContainer
            exact path="/"

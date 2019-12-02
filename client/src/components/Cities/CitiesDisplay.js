@@ -18,7 +18,7 @@ class CitiesDisplay2 extends Component {
     if (data != undefined) {
       ciudades = data;
       ciudades = ciudades.map(item => (
-        <ImageButton width="16em" height="16em" ciudad={item.name} />
+        <ImageButton /* width="16em" height="16em" */ ciudad={item.name} />
       ));
     } else {
       ciudades = "Loading...";

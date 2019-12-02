@@ -21,6 +21,7 @@ import {
 } from "../../store/actions/itineraryActions";
 import { reduxFetch } from "../../store/actions/reduxFetch";
 
+
 const mapStateToProps = state => {
   return {
     itineraries: state.itineraries.itineraries,
@@ -78,15 +79,17 @@ class UserItinerary extends Component {
 
     return (
       <Fragment>
-        <div id="itineraryContainer" className="container rounded mt-1">
+        <div id="itineraryContainer" className="container rounded mt-1 p-2">
           <div className="row">   
             <ProfilePicture username={username} userimage={userimage} />
-            <h3 id={"itineraryTitle"} className="ml-1 col-4 pt-2 pl-3">{title}</h3>
-
-            <Likes className="col-4 mt-5" likes={likes} />
-            <Duration className="col-4" duration={duration} />
-            <span color="#fff" className="col-4 text-white">{priceRange}</span>
-            <span className="comments text-white pl-4 mt-2">{hashtags}</span>
+            <h3 id={"itineraryTitle"} className="ml-1 col-4 pt-2">{title}</h3>
+            <div className="row">
+              <Likes className="col-4 mt-5" likes={likes} />
+              <Duration className="col-4" duration={duration} />
+              <span color="#fff" className="col-4 text-white">{priceRange}</span>
+              <span className="comments text-white mt-2">{hashtags}</span>
+            </div>
+            
           </div>
           <Accordion>
             <Accordion.Toggle className="toggleDeco"
@@ -97,7 +100,7 @@ class UserItinerary extends Component {
             > <FaIconPack className="toggleDeco mr-2 row" font-size="7vh"/>
          
             </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0" className="column">
+            <Accordion.Collapse eventKey="0">
               <div>
                 <Activities
                   activities={
@@ -109,6 +112,8 @@ class UserItinerary extends Component {
             </Accordion.Collapse>
           </Accordion>
         </div>
+
+
       </Fragment>
     );
   }

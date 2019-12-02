@@ -95,7 +95,8 @@ class LogIn extends Component {
           <Button  onClick={event => this.handleSubmit(event)} variant="success" type="submit">
             Submit
           </Button>
-          <GoogleLogin clientId="1083777488269-qtccrdu14cm0mhds2bo07tkuroik5ak7.apps.googleusercontent.com"
+          <GoogleLogin  className="rounded ml-2" 
+              clientId="1083777488269-qtccrdu14cm0mhds2bo07tkuroik5ak7.apps.googleusercontent.com"
               buttonText="Login"
               onSuccess={responseGoogle => {
                 const body= {

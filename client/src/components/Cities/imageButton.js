@@ -20,15 +20,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 class ImageButton extends Component {
   render() {
     const { accion } = this.props;
-
+    console.log(this.props.height)
+    let altura = this.props.height
+    let ancho = this.props.width
     return (
       <Fragment> 
         <Link className={"dameroLink"} to={`/${this.props.ciudad}`} >
         
-          <div className={"damero"}
+          <div className={"damero"} 
             style={{ 
-              backgroundImage: `url(${myImages.cities[this.props.ciudad]})`, 
-              }}
+              backgroundImage: `url(${myImages.cities[this.props.ciudad]})`,
+              backgroundSize: 'cover', backgroundPosition: 'center',
+              height: `${altura}`, width: `${ancho}`, maxHeight: '45%'              }}
             onClick={() => accion()}>
             {this.props.ciudad.replace(/[_]/, ' ')}
         </div>
