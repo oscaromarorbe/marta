@@ -4,6 +4,8 @@ import Button from "react-bootstrap/Button";
 import { getData } from "../../store/actions/reduxFetch";
 import { Link } from "react-router-dom";
 import GoogleLogin from "react-google-login";
+import LoginSuccess from '../Alerts/LoginSuccess';
+import LoginError from '../Alerts/LoginError';
 
 const responseGoogle = response => {
   console.log(response);
@@ -13,23 +15,30 @@ class LogIn extends Component {
     username: "",
     password: "",
     sessionuser: "",
-    googleuser: ""
+    googleuser: "",
+    logged:false,
+    error:false
   };
 
-  handleUsername(event) {
-    this.setState({ username: event.target.value });
-  }
-  handlePassword(event) {
-    this.setState({ password: event.target.value });
-  }
 
-  
+  handleChange = async (event) =>{
+    await this.setState({[event.target.name]:event.target.value});
+ /*    if (this.state.username.length==1|| 
+      this.state.password.length ==1||
+      this.state.email.length ==1) {this.setState({error: false})}
+    console.log(this.state) */
+    }
+
+  cleanForm = () => {
+    this.setState({ username: "",
+    email: "",
+    password: ""})
+  }
 
   handleSubmit(event) {
     event.preventDefault();
     event.stopPropagation();
     const bodyData = {
-      email: this.state.email,
       username: this.state.username,
       password: this.state.password
     };
@@ -42,11 +51,15 @@ class LogIn extends Component {
         headers: {
           "Content-Type": "application/json"
         }
-      },
-      data => console.log(data)
-    );
-  }
-
+      }, 
+     (data) => { 
+      if(data.success===true) {
+        this.setState({logged: true})
+     }else{
+       this.setState({error: true})
+     }  
+   })
+   }
 
   handleGMailSubmit(bodyData) {
     
@@ -66,26 +79,28 @@ class LogIn extends Component {
 
   render() {
     return (
-      <div id={"logForm"}>
+     
+     <div>
+
+      {this.state.logged ? <LoginSuccess {...this.props}/> : <div className=""></div>}
+      {this.state.error ? <LoginError cleanForm={this.cleanForm }{...this.props}/> : <div className=""></div>}
+        <div id={"logForm"}>
         <Form className={"col-8"}>
           <Form.Group controlId={"formBasicEmail"}>
-            <Form.Label>Username</Form.Label>
             <Form.Control
-              onChange={e => this.handleUsername(e)}
+              onChange={this.handleChange}
               value={this.state.username}
               type={"text"}
+              name="username"
               placeholder={"Enter username"}
             />
-            <Form.Text className={"text-muted"}>
-              Type your e-mail or username
-            </Form.Text>
           </Form.Group>
           <Form.Group controlId={"formBasicPassword"}>
-            <Form.Label>Password</Form.Label>
             <Form.Control
-              onChange={e => this.handlePassword(e)}
-              value={this.state.email}
+              onChange={this.handleChange}
+              value={this.state.password}
               type={"password"}
+              name="password"
               placeholder={"Password"}
             />
           </Form.Group>
@@ -115,7 +130,7 @@ class LogIn extends Component {
 
          
         </Form>
-      
+        </div>  
       </div>
     );
   }

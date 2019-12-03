@@ -3,33 +3,32 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 
-const RegisterError =(props)=>{ 
+const LoginSuccess =(props)=>{ 
 
         const[show,setShow]= useState(true);
-       let handleClose =()=>{setShow(false);}
+        let handleClose =()=>{setShow(false);}
         const handleShow = ()=>{setShow(true);}  
 
         const cerrar = () => {
-            props.cleanForm()
-            setShow(false);
-
+            setShow(false)
+            props.history.push("/")
         }
 
         return (
             <>
             <div className="container-fluid col-md-6">
-                <Alert show={show} variant="danger">
+                <Alert show={show} variant="success">
                 <p>
-                Can't Register!
+                Welcome Back to MYtinerary!
                 </p>
-                <Alert.Heading >User already exists</Alert.Heading>
-                <Button onClick={() => cerrar()} variant="outline-danger">
-                            Clean
+                <Alert.Heading > Find your next city</Alert.Heading>
+                <Button onClick={() => cerrar()} variant="outline-success">
+                            Close
                 </Button>
                 </Alert>
             </div> 
-   </>
+            </>
         );
     }
 
-export default RegisterError;
+export default LoginSuccess;

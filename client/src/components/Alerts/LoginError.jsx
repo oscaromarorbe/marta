@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 
-const RegisterError =(props)=>{ 
+const LoginError =(props)=>{ 
 
         const[show,setShow]= useState(true);
        let handleClose =()=>{setShow(false);}
@@ -20,9 +20,9 @@ const RegisterError =(props)=>{
             <div className="container-fluid col-md-6">
                 <Alert show={show} variant="danger">
                 <p>
-                Can't Register!
+                Can't Login!
                 </p>
-                <Alert.Heading >User already exists</Alert.Heading>
+                <Alert.Heading >Check the id and/or password</Alert.Heading>
                 <Button onClick={() => cerrar()} variant="outline-danger">
                             Clean
                 </Button>
@@ -32,4 +32,4 @@ const RegisterError =(props)=>{
         );
     }
 
-export default RegisterError;
+export default LoginError;
