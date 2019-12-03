@@ -42,8 +42,6 @@ const postUser = uri =>
   });
 postUser(userRegisterUri);
 
-
-
   const createJWTToken = (user, secret, duration) => {
     var token = jwt.sign(user.toJSON(), secret, {
       expiresIn: duration // 1 week
@@ -114,4 +112,5 @@ postUser(userRegisterUri);
       }
     });
   });
+  
   

@@ -2,22 +2,33 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { getData } from "../../store/actions/reduxFetch";
 import Button from 'react-bootstrap/Button'
+import RegisterSuccess from "../Alerts/RegisterSuccess";
+import RegisterError from "../Alerts/RegisterError";
 
 class Register extends Component {
   state = {
     username: "",
     email: "",
-    password: ""
+    password: "",
+    logged:false,
+    error:false
   };
 
-  handleChange = (event) =>{
-    this.setState({[event.target.name]:event.target.value});
+  cleanForm = () => {
+    this.setState({ username: "",
+    email: "",
+    password: ""})
+  }
+
+  handleChange = async (event) =>{
+    await this.setState({[event.target.name]:event.target.value});
+    if (this.state.username.length==1|| 
+      this.state.password.length ==1||
+      this.state.email.length ==1) {this.setState({error: false})}
     console.log(this.state)
     }
 
-
-
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
     const bodyData = {
@@ -25,14 +36,18 @@ class Register extends Component {
       username: this.state.username,
       password: this.state.password
     };
-
     getData("/api/users/register", {
       method: "POST",
       body: JSON.stringify(bodyData),
       headers: {
         "Content-Type": "application/json"
       }
-    }, (data)=>console.log(data));
+    }, (data) => { if(data._id) {
+       this.setState({logged: true})
+    }else{
+      this.setState({error: true})
+    }
+  })
   }
 
   render() {
@@ -42,7 +57,12 @@ class Register extends Component {
 
     return (
       <div>
-                <Form  className="justify-content" onSubmit={this.onSubmitHandler} className="col-8 " id="registerForm">
+             {this.state.logged ? <RegisterSuccess {...this.props}/> : <div className=""></div>}
+             {this.state.error ? <RegisterError cleanForm={this.cleanForm }{...this.props}/> : <div className=""></div>}
+
+            <Form  className="justify-content"  className="col-8 " id="registerForm">
+
+      
                     <div className="align-items-center">          
                         
                         {/* <img className="" id={"userPic"}src={userPic} height="120vh"></img> */}
@@ -50,7 +70,6 @@ class Register extends Component {
                       {/*   <input type="file" id="uploadPic" /> */}
                     </div>
                     <Form.Group controlId="exampleForm.ControlInput1">
-                  
                         <Form.Control type="Choose a username" name="username"               
                             className="mb-2"
                             placeholder="username" value={this.state.username}
@@ -65,9 +84,11 @@ class Register extends Component {
                             className="mb-2"
                             placeholder="password" value={this.state.password}
                             onChange={this.handleChange} />
-                        </Form.Group>                       
-                    <Button variant='success' value='submit' type='submit'>REGISTER</Button>
+                        </Form.Group>  
+                        <Button variant='success' onClick={this.handleSubmit} value='submit' type='submit'>REGISTER</Button>
+                     
                 </Form>
+               
             </div>
     );
   }

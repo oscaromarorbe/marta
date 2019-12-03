@@ -17,6 +17,7 @@ import {requestData, requestDataSuccess } from "./store/actions/cityActions"
 import { requestItineraries, requestItinerariesSuccess } from "./store/actions/itineraryActions";
 import RegisterContainer from './components/Register/RegisterContainer'
 import CarouselIt from './components/carouselIt';
+import loginSuccess from "./components/Alerts/RegisterSuccess";
 
 const mapStateToProps = state => {
   return {
