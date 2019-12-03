@@ -30,8 +30,8 @@ class ImageButton extends Component {
           <div className={"damero"} 
             style={{ 
               backgroundImage: `url(${myImages.cities[this.props.ciudad]})`,
-              backgroundSize: 'cover', backgroundPosition: 'center',
-              height: `${altura}`, width: `${ancho}`, maxHeight: '45%'              }}
+             /*  backgroundSize: 'cover', backgroundPosition: 'center', */
+              height: `${altura}`, width: `${ancho}`}}
             onClick={() => accion()}>
             {this.props.ciudad.replace(/[_]/, ' ')}
         </div>

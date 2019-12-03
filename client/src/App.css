@@ -139,6 +139,11 @@ a{
   opacity:0.7;
 }
 
+.carousel-item div { 
+  display: flex; 
+  justify-content: center;
+
+}
 .imgSize{
   margin-bottom:4%;
   margin-right:0%;
@@ -211,7 +216,7 @@ padding-top:2%;
 /*////////////////* DAMERO */
 .damero {
   height: 30vh;
-  width: 30vh;
+  width: 200px;
   background-color: #719bac;
   border-radius: 10%;
   background-size: cover;

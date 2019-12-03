@@ -39,8 +39,8 @@ class CarouselNav extends Component {
         <h1 className={"display-6"}>Most Popular MYtineraries</h1>
         <CarouselBoots>
           {quadrupleCarouselItems.map(item => (
-            <CarouselBoots.Item style={{width: '100%', marginLeft:'7vw'}} className="row align-items-center">
-              <div className={"row align-items-center"}>
+            <CarouselBoots.Item style={{width: '100%'}} className="row align-items-center">
+               <div className={"row align-items-center"}>
                 {/* <Price></Price> */}
                 {item.map((ciudad, index) => (
                   <ImageButton 
