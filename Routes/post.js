@@ -69,7 +69,7 @@ postUser(userRegisterUri);
               if (match) {
                 res.json({
                   success: true,
-                  token: "JWT " + createJWTToken(user, secretOrKey, 604800)
+                  token: createJWTToken(user, secretOrKey, 604800)
                 });
               } else {
                 res.json({

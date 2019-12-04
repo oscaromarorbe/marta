@@ -6,26 +6,34 @@ import { Link } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import LoginSuccess from '../Alerts/LoginSuccess';
 import LoginError from '../Alerts/LoginError';
+import {connect} from 'react-redux';
+import {userLoginFetch} from '../../store/actions/userActions';
 
 const responseGoogle = response => {
   console.log(response);
 };
 class LogIn extends Component {
-  state = {
-    username: "",
-    password: "",
-    sessionuser: "",
-    googleuser: "",
-    logged:false,
-    error:false
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+      sessionuser: "",
+      googleuser: "",
+      logged:false,
+      error:false
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleGMailSubmit = this.handleGMailSubmit.bind(this)
+  }
+  
 
 
   handleChange = async (event) =>{
     await this.setState({[event.target.name]:event.target.value});
      if (this.state.username.length==1|| 
       this.state.password.length ==1) {this.setState({error: false})}
-    console.log(this.state) 
     }
 
   cleanForm = () => {
@@ -37,27 +45,28 @@ class LogIn extends Component {
   handleSubmit(event) {
     event.preventDefault();
     event.stopPropagation();
-    const bodyData = {
-      username: this.state.username,
-      password: this.state.password
-    };
+    this.props.userLoginFetch(this.state)
+  //   const bodyData = {
+  //     username: this.state.username,
+  //     password: this.state.password
+  //   };
 
-    getData(
-      "/api/users/login",
-      {
-        method: "POST",
-        body: JSON.stringify(bodyData),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }, 
-     (data) => { 
-      if(data.success===true) {
-        this.setState({logged: true})
-     }else{
-       this.setState({error: true})
-     }  
-   })
+  //   getData(
+  //     "/api/users/login",
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify(bodyData),
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       }
+  //     }, 
+  //    (data) => { 
+  //     if(data.success===true) {
+  //       this.setState({logged: true})
+  //    }else{
+  //      this.setState({error: true})
+  //    }  
+  //  })
    }
 
   handleGMailSubmit(bodyData) {
@@ -101,9 +110,6 @@ class LogIn extends Component {
               placeholder={"Password"}
             />
           </Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check out" />
-          </Form.Group>
           <Button  onClick={event => this.handleSubmit(event)} variant="success" type="submit">
             Submit
           </Button>
@@ -124,8 +130,6 @@ class LogIn extends Component {
               }}
               onFailure={responseGoogle}
               cookiePolicy={"single_host_origin"}></GoogleLogin>
-
-         
         </Form>
         </div>  
       </div>
@@ -133,7 +137,14 @@ class LogIn extends Component {
   }
 }
 
-export default LogIn;
+//export default LogIn;
+
+const mapDispatchToProps = dispatch => ({
+  userLoginFetch: userInfo => dispatch(userLoginFetch(userInfo))
+})
+
+export default connect(null, mapDispatchToProps)(LogIn);
+
 /*getData("/api/users/register", {
       method: "POST",
       body: JSON.stringify(bodyData),

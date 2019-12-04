@@ -17,6 +17,7 @@ import {requestData, requestDataSuccess } from "./store/actions/cityActions"
 import { requestItineraries, requestItinerariesSuccess } from "./store/actions/itineraryActions";
 import RegisterContainer from './components/Register/RegisterContainer'
 import loginSuccess from "./components/Alerts/RegisterSuccess";
+import {getUserFetch} from './store/actions/userActions';
 
 
 const mapStateToProps = state => {
@@ -29,6 +30,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     accion: () => dispatch(reduxFetch("/api/cities", requestData, requestDataSuccess)),
+    getUserFetch: () => dispatch(getUserFetch()),
   };
 };
 
@@ -45,6 +47,7 @@ class App extends Component {
   componentDidMount() {
     const { accion } = this.props;
     accion();
+    this.props.getUserFetch();
   }
 
   render() {
