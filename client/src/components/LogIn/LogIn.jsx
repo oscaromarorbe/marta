@@ -20,15 +20,13 @@ class LogIn extends Component {
       password: "",
       sessionuser: "",
       googleuser: "",
-      logged:false,
+      logged:"",
       error:false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleGMailSubmit = this.handleGMailSubmit.bind(this)
   }
-  
-
 
   handleChange = async (event) =>{
     await this.setState({[event.target.name]:event.target.value});
@@ -42,31 +40,18 @@ class LogIn extends Component {
     password: ""})
   }
 
-  handleSubmit(event) {
+  handleSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
-    this.props.userLoginFetch(this.state)
-  //   const bodyData = {
-  //     username: this.state.username,
-  //     password: this.state.password
-  //   };
-
-  //   getData(
-  //     "/api/users/login",
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify(bodyData),
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       }
-  //     }, 
-  //    (data) => { 
-  //     if(data.success===true) {
-  //       this.setState({logged: true})
-  //    }else{
-  //      this.setState({error: true})
-  //    }  
-  //  })
+    await this.props.userLoginFetch(this.state)
+    const { logged } = this.props;
+    console.log("prop log",logged)
+    console.log("this state log", this.state.logged)
+    if(logged === true){
+      this.setState({logged:true})
+    }else{
+      this.setState({logged:false})
+    }
    }
 
   handleGMailSubmit(bodyData) {
@@ -86,10 +71,11 @@ class LogIn extends Component {
   }
 
   render() {
+    
     return (     
      <div>
       {this.state.logged ? <LoginSuccess {...this.props}/> : <div className=""></div>}
-      {this.state.error ? <LoginError cleanForm={this.cleanForm }{...this.props}/> : <div className=""></div>}
+      {!this.state.logged ? <LoginError cleanForm={this.cleanForm }{...this.props}/> : <div className=""></div>}
         <div id={"logForm"}>
         <Form className={"col-8"}>
           <Form.Group controlId={"formBasicEmail"}>
@@ -137,29 +123,14 @@ class LogIn extends Component {
   }
 }
 
-//export default LogIn;
-
 const mapDispatchToProps = dispatch => ({
   userLoginFetch: userInfo => dispatch(userLoginFetch(userInfo))
 })
 
-export default connect(null, mapDispatchToProps)(LogIn);
+const mapStateToProps = state => {
+  return {
+    logged: state.user.logged
+  };
+};
 
-/*getData("/api/users/register", {
-      method: "POST",
-      body: JSON.stringify(bodyData),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }, (data)=>alert(data)); */
-const googlelogin =  <GoogleLogin
-clientId="1083777488269-qtccrdu14cm0mhds2bo07tkuroik5ak7.apps.googleusercontent.com"
-buttonText="Login"
-onSuccess={responseGoogle => {
-  console.log(responseGoogle.profileObj.email);
-
-  this.setState({ googleuser: responseGoogle.profileObj.email });
-}}
-onFailure={responseGoogle}
-cookiePolicy={"single_host_origin"}
-/>
+export default connect(mapStateToProps,mapDispatchToProps)(LogIn);

@@ -3,28 +3,24 @@ const jwt = require('jsonwebtoken');
 
 export const userPostFetch = user => {
     return dispatch => {
-      return fetch("/api/users/register", {
+      return getData("/api/users/register", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify(user)
-      })
-      .then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(res => {
-        if(res.success){
-          const token = res.token
-          localStorage.setItem("token", token)
-          console.log(jwt.decode(token))
-          dispatch(loginUser(jwt.decode(token)))
-        }else{
-          console.log(res.msg)
-          console.log("Gil");
-        }
-      }
-      );
+      },(data) => { 
+             if(data.success===true) {
+               localStorage.setItem("token", data.token)
+               console.log(data)
+               console.log("data",jwt.decode(data.token))
+               dispatch(loginUser(jwt.decode(data.token)))
+            }else{
+              localStorage.removeItem("token")
+              console.log(data.msg);
+            }  
+      }) 
     }
   }
 
@@ -40,53 +36,41 @@ export const userPostFetch = user => {
       },(data) => { 
              if(data.success===true) {
                localStorage.setItem("token", data.token)
-               console.log("data",jwt.decode(data.token))
-               dispatch(loginUser(jwt.decode(data.token)))
+               dispatch(loginUser(data))
             }else{
+              localStorage.removeItem("token")
               console.log(data.msg);
             }  
-          })   
-    //   .then(res => res.json())
-    //   .catch(error => console.error('Error:', error))
-    //   .then(res => {
-    //     if(res.success){
-    //       const token = res.token
-    //       localStorage.setItem("token", token)
-    //       console.log(jwt.decode(token))
-    //       dispatch(loginUser(jwt.decode(token)))
-    //     }else{
-    //       console.log(res.msg)
-    //       console.log("Gil");
-    //     }
-    //   }
-    //   );
+      })   
     }
   }
 
   export const getUserFetch = () => {
     return dispatch => {
-        console.log("Checkeando User")
       const token = localStorage.token;
       if (token) {
-        return fetch("/api/users/login", {
+        return getData("/api/users/login", {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
             'Authorization': `Bearer ${token}`
           }
-        }).then(res => res.json())
-          .catch(error => console.error('Error:', error))
-          .then( () =>  {
-              console.log("User",jwt.decode(token));
-              dispatch(loginUser(jwt.decode(token)))
-            }
-          )
+        },(data) => { 
+             if(data.success===true) {
+               localStorage.setItem("token", data.token)
+               dispatch(loginUser(data))
+            }else{
+              localStorage.removeItem("token")
+              console.log(data.msg);
+            }  
+      })  
       }
     }
   }
   
-  const loginUser = userObj => ({
+  const loginUser = data => ({
       type: 'LOGIN_USER',
-      payload: userObj
+      payload: jwt.decode(data.token),
+      logged: data.logged
   })

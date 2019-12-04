@@ -59,7 +59,8 @@ postUser(userRegisterUri);
           if (!user) {
             res.send({
               success: false,
-              msg: "Authentication failed. User not found."
+              msg: "Authentication failed. User not found.",
+              logged: false,
             });
           } else {
             bcrypt.compare(req.body.password, user.password, function(
@@ -69,12 +70,14 @@ postUser(userRegisterUri);
               if (match) {
                 res.json({
                   success: true,
-                  token: createJWTToken(user, secretOrKey, 604800)
+                  token: createJWTToken(user, secretOrKey, 604800),
+                  logged: true,
                 });
               } else {
                 res.json({
                   success: false,
-                  msg: "Authentication failed. Wrong password."
+                  msg: "Authentication failed. Wrong password.",
+                  logged: false,
                 });
               }
             });
@@ -100,14 +103,14 @@ postUser(userRegisterUri);
           .send({
             msg: "New user saved",
             data: newUser,
-            token: "JWT " + createJWTToken(newUser, secretOrKey, 604800)
+            token: createJWTToken(newUser, secretOrKey, 604800)
           })
           .end();
       } else {
         res.send({
           success: true,
           msg: "Authentication succesful. User found.",
-          token: "JWT " + createJWTToken(user, secretOrKey, 604800)
+          token: createJWTToken(user, secretOrKey, 604800)
         });
       }
     });

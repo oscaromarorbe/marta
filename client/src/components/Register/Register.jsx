@@ -4,6 +4,8 @@ import { getData } from "../../store/actions/reduxFetch";
 import Button from 'react-bootstrap/Button'
 import RegisterSuccess from "../Alerts/RegisterSuccess";
 import RegisterError from "../Alerts/RegisterError";
+import {connect} from 'react-redux';
+import {userPostFetch} from '../../store/actions/userActions';
 
 class Register extends Component {
   state = {
@@ -31,23 +33,7 @@ class Register extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    const bodyData = {
-      email: this.state.email,
-      username: this.state.username,
-      password: this.state.password
-    };
-    getData("/api/users/register", {
-      method: "POST",
-      body: JSON.stringify(bodyData),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }, (data) => { if(data._id) {
-       this.setState({logged: true})
-    }else{
-      this.setState({error: true})
-    }
-  })
+    this.props.userPostFetch(this.state)
   }
 
   render() {
@@ -94,4 +80,10 @@ class Register extends Component {
   }
 }
 
-export default Register;
+//export default Register;
+
+const mapDispatchToProps = dispatch => ({
+  userPostFetch: userInfo => dispatch(userPostFetch(userInfo))
+})
+
+export default connect(null, mapDispatchToProps)(Register);
