@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import ProfilePicture from "./ProfilePicture";
 import Likes from "./Likes";
 import Duration from "./Duration";
-import Comments from "./Comments";
+/* import Comments from "./Comments"; */
 import Activities from "./Activities";
 import { Fragment } from "react";
 import Accordion from "react-bootstrap/Accordion";
-import AccordionContainer from "./AccordionContainer";
 import FaIconPack from 'react-icons/lib/fa/arrow-circle-down';
+import ItineraryDetail from '../../components/Comments/ItineraryDetail';
+import ItinerariesCarousel from '../Comments/ItinerariesCarousel';
 
 
 import {
@@ -20,6 +21,8 @@ import {
   requestCommentsSuccess
 } from "../../store/actions/itineraryActions";
 import { reduxFetch } from "../../store/actions/reduxFetch";
+
+
 
 
 const mapStateToProps = state => {
@@ -82,32 +85,39 @@ class UserItinerary extends Component {
         <div id="itineraryContainer" className="container rounded mt-1 p-2">
           <div className="row">   
             <ProfilePicture username={username} userimage={userimage} />
-            <h3 id={"itineraryTitle"} className="ml-1 col-4 pt-2">{title}</h3>
+       <h3 id={"itineraryTitle"} className="ml-1 col-4 pt-2">{title}</h3>
             <div className="row">
               <Likes className="col-4 mt-5" likes={likes} />
               <Duration className="col-4" duration={duration} />
               <span color="#fff" className="col-4 text-white">{priceRange}</span>
               <span className="comments text-white mt-2">{hashtags}</span>
-            </div>
+            </div> 
             
           </div>
           <Accordion>
+         
             <Accordion.Toggle className="toggleDeco"
               onClick={() =>
                 filteredActivities == "" ? requestActivities(title) : null
               }
               eventKey="0"
-            > <FaIconPack className="toggleDeco mr-2 row" font-size="7vh"/>
-         
+            >
+                 
+              <FaIconPack className="toggleDeco mr-2 row" font-size="7vh"/>
+           
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
+              
               <div>
+              <ItinerariesCarousel {...this.props}></ItinerariesCarousel>  
                 <Activities
                   activities={
                     filteredActivities != "" && filteredActivities[0].activities
                   }
                 />
-                <Comments comments={comments} action={action} />
+                {/* <Comments comments={comments} action={action} /> */}
+          
+                  <ItineraryDetail {...this.props}/>
               </div>
             </Accordion.Collapse>
           </Accordion>

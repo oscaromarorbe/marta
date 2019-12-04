@@ -23,10 +23,9 @@ class LogIn extends Component {
 
   handleChange = async (event) =>{
     await this.setState({[event.target.name]:event.target.value});
- /*    if (this.state.username.length==1|| 
-      this.state.password.length ==1||
-      this.state.email.length ==1) {this.setState({error: false})}
-    console.log(this.state) */
+     if (this.state.username.length==1|| 
+      this.state.password.length ==1) {this.setState({error: false})}
+    console.log(this.state) 
     }
 
   cleanForm = () => {
@@ -78,10 +77,8 @@ class LogIn extends Component {
   }
 
   render() {
-    return (
-     
+    return (     
      <div>
-
       {this.state.logged ? <LoginSuccess {...this.props}/> : <div className=""></div>}
       {this.state.error ? <LoginError cleanForm={this.cleanForm }{...this.props}/> : <div className=""></div>}
         <div id={"logForm"}>

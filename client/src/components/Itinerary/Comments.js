@@ -1,6 +1,8 @@
 import React from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+
+
 const Comments = ({ comments, action }) => {
   return (
  <div>  
@@ -17,17 +19,9 @@ const Comments = ({ comments, action }) => {
           {comments.map(comment => (
             <li color="#fff" >{comment}</li>
           )) || comments} 
-          
-          
         </ul>
-      </div>
-    
-    
-    
-    
+      </div> 
     </div>
-    
-  
   );
 };
 export default Comments;
