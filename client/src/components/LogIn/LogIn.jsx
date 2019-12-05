@@ -46,8 +46,10 @@ class LogIn extends Component {
     await this.props.userLoginFetch(this.state)
     const { logged } = this.props;
     if(logged == true){
+      console.log("entra acá")
       this.setState({isLogged:true})
     }else if(logged == false){
+      console.log("entró")
       this.setState({error:true})
     }
    }
@@ -69,6 +71,8 @@ class LogIn extends Component {
   }
 
   render() {
+    console.log("props logged", this.props.logged)
+    console.log("islogged", this.state.isLogged)
     return (     
      <div>
       {this.state.isLogged ? <LoginSuccess {...this.props}/> : <div className=""></div>}

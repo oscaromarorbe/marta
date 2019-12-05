@@ -11,9 +11,9 @@ export const userPostFetch = user => {
         },
         body: JSON.stringify(user)
       },(data) => { 
-             if(data.success===true) {
+             if(data.success) {
                localStorage.setItem("token", data.token)
-               dispatch(loginUser(jwt.decode(data.token)))
+               dispatch(loginUser(data))
             }else{
               localStorage.removeItem("token")
             }  
@@ -32,9 +32,11 @@ export const userPostFetch = user => {
         body: JSON.stringify(user)
       },(data) => { 
              if(data.success===true) {
+               console.log("data",data)
                localStorage.setItem("token", data.token)
                dispatch(loginUser(data))
             }else{
+              console.log("data",data)
               localStorage.removeItem("token")
               console.log(data.msg);
             }  

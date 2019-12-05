@@ -35,7 +35,17 @@ const postUser = uri =>
         profilePicture: req.body.profilePicture
       });
       newUser.save(err => {
-        if (err) return res.status(500).send(err);
+        if (err) return res.json({
+          success: false,
+          logged: false,
+          msg: "User Creation Failed"
+        });
+        else{
+          res.json({
+          success: true,
+          token: createJWTToken(newUser, secretOrKey, 604800),
+          logged: true,
+        });}
         return res.status(200).send(newUser);
       });
     });

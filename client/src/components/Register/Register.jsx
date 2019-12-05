@@ -12,8 +12,8 @@ class Register extends Component {
     username: "",
     email: "",
     password: "",
-    logged:false,
-    error:false
+    isLogged:"",
+    error:""
   };
 
   cleanForm = () => {
@@ -27,23 +27,27 @@ class Register extends Component {
     if (this.state.username.length==1|| 
       this.state.password.length ==1||
       this.state.email.length ==1) {this.setState({error: false})}
-    console.log(this.state)
     }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
-    this.props.userPostFetch(this.state)
+    await this.props.userPostFetch(this.state)
+    const { logged } = this.props;
+    if(logged == true){
+      this.setState({isLogged:true})
+    }else if(logged == false){
+      this.setState({error:true})
+    }
   }
 
   render() {
-    console.log(this.state.username);
-    console.log(this.state.email);
-    console.log(this.state.password);
-
+    console.log("prop logged", this.props.logged)
+    console.log("isLogged", this.state.isLogged)
+    console.log("error", this.state.error)
     return (
       <div>
-             {this.state.logged ? <RegisterSuccess {...this.props}/> : <div className=""></div>}
+             {this.state.isLogged ? <RegisterSuccess {...this.props}/> : <div className=""></div>}
              {this.state.error ? <RegisterError cleanForm={this.cleanForm }{...this.props}/> : <div className=""></div>}
 
             <Form  className="justify-content"  className="col-8 " id="registerForm">
@@ -80,10 +84,14 @@ class Register extends Component {
   }
 }
 
-//export default Register;
-
 const mapDispatchToProps = dispatch => ({
   userPostFetch: userInfo => dispatch(userPostFetch(userInfo))
 })
 
-export default connect(null, mapDispatchToProps)(Register);
+const mapStateToProps = state => {
+  return {
+    logged: state.user.logged
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
