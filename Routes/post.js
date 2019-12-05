@@ -57,7 +57,7 @@ postUser(userRegisterUri);
           if (err) throw err;
   
           if (!user) {
-            res.send({
+            res.json({
               success: false,
               msg: "Authentication failed. User not found.",
               logged: false,

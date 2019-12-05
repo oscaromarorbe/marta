@@ -20,8 +20,8 @@ class LogIn extends Component {
       password: "",
       sessionuser: "",
       googleuser: "",
-      logged:"",
-      error:false
+      isLogged:"",
+      error:""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,12 +45,10 @@ class LogIn extends Component {
     event.stopPropagation();
     await this.props.userLoginFetch(this.state)
     const { logged } = this.props;
-    console.log("prop log",logged)
-    console.log("this state log", this.state.logged)
-    if(logged === true){
-      this.setState({logged:true})
-    }else{
-      this.setState({logged:false})
+    if(logged == true){
+      this.setState({isLogged:true})
+    }else if(logged == false){
+      this.setState({error:true})
     }
    }
 
@@ -71,11 +69,10 @@ class LogIn extends Component {
   }
 
   render() {
-    
     return (     
      <div>
-      {this.state.logged ? <LoginSuccess {...this.props}/> : <div className=""></div>}
-      {!this.state.logged ? <LoginError cleanForm={this.cleanForm }{...this.props}/> : <div className=""></div>}
+      {this.state.isLogged ? <LoginSuccess {...this.props}/> : <div className=""></div>}
+      {this.state.error ? <LoginError cleanForm={this.cleanForm }{...this.props}/> : <div className=""></div>}
         <div id={"logForm"}>
         <Form className={"col-8"}>
           <Form.Group controlId={"formBasicEmail"}>

@@ -13,12 +13,9 @@ export const userPostFetch = user => {
       },(data) => { 
              if(data.success===true) {
                localStorage.setItem("token", data.token)
-               console.log(data)
-               console.log("data",jwt.decode(data.token))
                dispatch(loginUser(jwt.decode(data.token)))
             }else{
               localStorage.removeItem("token")
-              console.log(data.msg);
             }  
       }) 
     }
