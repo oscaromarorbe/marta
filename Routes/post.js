@@ -45,7 +45,6 @@ const postUser = uri =>
           res.json({
           success: true,
           logged: false,
-          token: createJWTToken(newUser, secretOrKey, 604800),
           created: true,
         });}
       });
