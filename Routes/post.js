@@ -37,16 +37,17 @@ const postUser = uri =>
       newUser.save(err => {
         if (err) return res.json({
           success: false,
+          created: false,
           logged: false,
           msg: "User Creation Failed"
         });
         else{
           res.json({
           success: true,
+          logged: false,
           token: createJWTToken(newUser, secretOrKey, 604800),
-          logged: true,
+          created: true,
         });}
-        return res.status(200).send(newUser);
       });
     });
   });
@@ -71,6 +72,7 @@ postUser(userRegisterUri);
               success: false,
               msg: "Authentication failed. User not found.",
               logged: false,
+              created: false
             });
           } else {
             bcrypt.compare(req.body.password, user.password, function(
@@ -82,12 +84,14 @@ postUser(userRegisterUri);
                   success: true,
                   token: createJWTToken(user, secretOrKey, 604800),
                   logged: true,
+                  created: false
                 });
               } else {
                 res.json({
                   success: false,
                   msg: "Authentication failed. Wrong password.",
                   logged: false,
+                  created: false
                 });
               }
             });

@@ -12,7 +12,7 @@ class Register extends Component {
     username: "",
     email: "",
     password: "",
-    isLogged:"",
+    isCreated:"",
     error:""
   };
 
@@ -33,21 +33,18 @@ class Register extends Component {
     event.preventDefault();
     event.stopPropagation();
     await this.props.userPostFetch(this.state)
-    const { logged } = this.props;
-    if(logged == true){
-      this.setState({isLogged:true})
-    }else if(logged == false){
+    const { created } = this.props;
+    if(created == true){
+      this.setState({isCreated:true})
+    }else if(created == false){
       this.setState({error:true})
     }
   }
 
   render() {
-    console.log("prop logged", this.props.logged)
-    console.log("isLogged", this.state.isLogged)
-    console.log("error", this.state.error)
     return (
       <div>
-             {this.state.isLogged ? <RegisterSuccess {...this.props}/> : <div className=""></div>}
+             {this.state.isCreated ? <RegisterSuccess {...this.props}/> : <div className=""></div>}
              {this.state.error ? <RegisterError cleanForm={this.cleanForm }{...this.props}/> : <div className=""></div>}
 
             <Form  className="justify-content"  className="col-8 " id="registerForm">
@@ -90,7 +87,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
   return {
-    logged: state.user.logged
+    created: state.user.created,
   };
 };
 

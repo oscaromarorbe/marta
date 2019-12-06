@@ -10,7 +10,7 @@ const RegisterSuccess =(props)=>{
 
         const cerrar = () => {
             setShow(false)
-            props.history.push("/")
+            props.history.push("/Login")
         }
 
         return (

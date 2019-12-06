@@ -71,5 +71,13 @@ export const userPostFetch = user => {
   const loginUser = data => ({
       type: 'LOGIN_USER',
       payload: jwt.decode(data.token),
-      logged: data.logged
+      logged: data.logged,
+      created: data.created,
   })
+
+  const createUser = data => ({
+    type: 'CREATE_USER',
+    payload: {},
+    logged: data.logged,
+    created: data.created,
+})
