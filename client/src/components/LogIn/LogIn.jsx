@@ -71,8 +71,6 @@ class LogIn extends Component {
   }
 
   render() {
-    console.log("props logged", this.props.logged)
-    console.log("islogged", this.state.isLogged)
     return (     
      <div>
       {this.state.isLogged ? <LoginSuccess {...this.props}/> : <div className=""></div>}
