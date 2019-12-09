@@ -72,8 +72,7 @@ class App extends Component {
               callback={this.sendStateToMain}
             />
           </Route>
-          <Route exact path={`/${reduxNavData}`}>
-            <FeaturedCity city={reduxNavData} />
+          <Route exact path='/:cityName' component={FeaturedCity}>
           </Route>
         </Switch>
         <Route path="" component={Footer}></Route>

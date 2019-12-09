@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import {Modal} from 'react-bootstrap';
+import {Link} from 'react-router-dom'
 
 const LoginError = (props) => {
 
@@ -13,15 +14,15 @@ const LoginError = (props) => {
     
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>ERROR</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Body>There was an error, please try again!</Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
+            <Button variant="secondary" onClick={handleClose} to="/">
+              Try Again
             </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
+            <Button variant="primary" onClick={handleClose} >
+             <a id="savechang"href="/">Go to home page</a>
             </Button>
           </Modal.Footer>
         </Modal>

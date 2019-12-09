@@ -1,7 +1,8 @@
   import React from 'react';
   import { connect } from 'react-redux';
   import {getData} from '../../store/actions/reduxFetch';
-  import {Button} from 'react-bootstrap'
+  import {Button} from 'react-bootstrap';
+  // import {IoIosHeart, IoIosHeartEmpty} from 'react-icons/io'
 
     const mapStateToProps = state => {
     return {
@@ -47,7 +48,7 @@
               "Content-Type": "application/json"
             }
           },(response) => console.log(response))}>
-                <span className="glyphicon glyphicon-thumbs-down"/>
+                <span className="glyphicon glyphicon-thumbs-down"/><span/>
         </Button> 
         
     </>
