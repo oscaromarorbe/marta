@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "bcrypt": "^3.0.7",
     "bootstrap": "^4.4.1",
     "express": "^4.17.1",
