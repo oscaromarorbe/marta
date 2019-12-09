@@ -10,14 +10,12 @@ import {
   requestActivities,
   requestActivitiesSuccess
 } from "../../store/actions/itineraryActions";
-
 const mapStateToProps = state => {
   return {
     itineraries: state.itineraries.itineraries,
     activities: state.itineraries.activities
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     getItineraries: navData =>
@@ -38,24 +36,23 @@ const mapDispatchToProps = dispatch => {
       )
   };
 };
-
 class FeaturedCity extends Component {
   componentDidMount() {
     const { getItineraries } = this.props;
-    getItineraries(this.props.city);
+    getItineraries(this.props.match.params.cityName);
    /* const { getActivities } = this.props;
     getActivities(this.props.city);*/
   }
   render() {
     const { itineraries } = this.props;
-    console.log(
-      `FEATURED ITINERARIES FOR ${this.props.city}: ${JSON.stringify(
+    /* console.log(
+      `FEATURED ITINERARIES FOR ${this.props.match.params.cityName}: ${JSON.stringify(
         itineraries
       )}`
-    );
+    ); */
     const itineraryList = itineraries.map((itinerary, index) => (
       <UserItinerary
-        city={this.props.city}
+        city={this.props.match.params.cityName}
         title={itinerary.title}
         duration={itinerary.duration}
         likes={itinerary.rating}
@@ -69,13 +66,13 @@ class FeaturedCity extends Component {
     return (
       <Fragment>
       <div className="singleCity" class="container col-md-12">
-         <h1 className="featTitle">{this.props.city.replace(/[_]/, " ")}</h1>
+         <h1 className="featTitle">{this.props.city/* .replace(/[_]/, " ") */}</h1>
       <div className="row col-md-12">
           <div className="col-md-3 col-sd-2">
-            <img className="featPic" src={myImages.cities[this.props.city]}></img>    
+            <img className="featPic" src={myImages.cities[this.props.match.params.cityName]}></img>    
           </div>
           <div className="col-md-9 col-sd-14">
-              <h6 className="rounded cityDescript">{myTexts.cities[this.props.city]}</h6  >
+              <h6 className="rounded cityDescript">{myTexts.cities[this.props.match.params.cityName]}</h6  >
           </div>
       </div> 
       <div>
