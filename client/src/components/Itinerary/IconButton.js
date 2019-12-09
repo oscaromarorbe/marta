@@ -2,6 +2,8 @@
   import { connect } from 'react-redux';
   import {getData} from '../../store/actions/reduxFetch';
   import {Button} from 'react-bootstrap';
+  import Octicon, {Thumbsup, Thumbsdown} from '@primer/octicons-react'
+
 
     const mapStateToProps = state => {
     return {
@@ -24,7 +26,7 @@
       <>
   
       
-          <Button className="btn" onClick={ () => getData(`/api/itineraries/byTitle/${props.title}/likes`, {
+          <Button className="" onClick={ () => getData(`/api/itineraries/byTitle/${props.title}/likes`, {
           method: "PUT",
           body: JSON.stringify({
             username: {user}
@@ -34,11 +36,11 @@
           }
         },(response) => console.log(response))}>
 
-           <a className="fas fa-thumbs-up"/>
+            <Octicon icon={Thumbsup}/>
        
         
       </Button>
-            <Button className="btn" onClick={  () => getData(`/api/itineraries/byTitle/${props.title}/dislikes`, {
+            <Button className="" onClick={  () => getData(`/api/itineraries/byTitle/${props.title}/dislikes`, {
             method: "PUT",
             body: JSON.stringify({
               username: {user}
@@ -47,7 +49,7 @@
               "Content-Type": "application/json"
             }
           },(response) => console.log(response))}>
-                <a className="fas fa-thumbs-down"/>
+                   <Octicon icon={Thumbsdown} size="small"/>
         </Button> 
         
     </>
