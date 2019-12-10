@@ -11,6 +11,7 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 
 opts.secretOrKey= key
 
+<<<<<<< HEAD
 module.exports = /*passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
         User.findById(jwt_payload.id)
@@ -23,6 +24,9 @@ module.exports = /*passport.use(
         .catch(err => console.log(err));
     })
   );*/
+=======
+module.exports = 
+>>>>>>> 2d4c097a86603e272e024bb85b9d7d10ccf854b6
 
   passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
     User.findOne({id: jwt_payload.id}, function(err, user) {
@@ -33,7 +37,11 @@ module.exports = /*passport.use(
             return done(null, user);
         } else {
             return done(null, false);
+<<<<<<< HEAD
             // or you could create a new account
+=======
+          
+>>>>>>> 2d4c097a86603e272e024bb85b9d7d10ccf854b6
         }
     });
 }));

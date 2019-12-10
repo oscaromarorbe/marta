@@ -1,4 +1,4 @@
-import {REQUEST_DATA, REQUEST_DATA_SUCCESS, REQUEST_DATA_FAILURE} from './ActionTypes'
+import {REQUEST_DATA, REQUEST_DATA_SUCCESS} from './ActionTypes'
 export function requestData() {
   return {
     type: REQUEST_DATA,

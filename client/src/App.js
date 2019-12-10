@@ -1,22 +1,22 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowseRouter, Route, Link, Switch, Redirect } from "react-router-dom";
+import { Route, Switch} from "react-router-dom";
 import Header from "./components/Header/Header";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import BrowsingContainer from "./Containers/BrowsingContainer";
 import LogIn from "./components/LogIn/LogIn";
-import LoginSubmit from './components/LogIn/LoginSubmit'
+// import LoginSubmit from './components/LogIn/LoginSubmit'
 import Register from "./components/Register/Register";
 import CitiesContainer from "./components/Cities/CitiesContainer";
 import FeaturedCity from "./components/Cities/FeaturedCity";
 import { connect } from "react-redux";
 import { reduxFetch } from "./store/actions/reduxFetch";
 import {requestData, requestDataSuccess } from "./store/actions/cityActions"
-import { requestItineraries, requestItinerariesSuccess } from "./store/actions/itineraryActions";
-import RegisterContainer from './components/Register/RegisterContainer'
-import loginSuccess from "./components/Alerts/RegisterSuccess";
+// import { requestItineraries, requestItinerariesSuccess } from "./store/actions/itineraryActions";
+// import RegisterContainer from './components/Register/RegisterContainer'
+// import loginSuccess from "./components/Alerts/RegisterSuccess";
 import {getUserFetch} from './store/actions/userActions';
 
 
@@ -72,10 +72,8 @@ class App extends Component {
               callback={this.sendStateToMain}
             />
           </Route>
-          {/* <Route exact path={`/${reduxNavData}`}>
-            <FeaturedCity city={reduxNavData} />
-          </Route> */}
-          <Route exact path='/:cityName' component={FeaturedCity} />
+          <Route exact path='/:cityName' component={FeaturedCity}>
+          </Route>
         </Switch>
         <Route path="" component={Footer}></Route>
         

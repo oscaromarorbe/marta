@@ -18,7 +18,7 @@ class Activities extends Component {
   render() {
     console.log(this.state.items);
     let conditionalRender;
-    if (this.state.items != '') {
+    if (!this.state.items) {
     conditionalRender = this.state.items[0].activities
       console.log(conditionalRender);
     }

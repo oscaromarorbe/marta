@@ -6,8 +6,13 @@ import {
     REQUEST_ACTIVITIES_SUCCESS,
     REQUEST_COMMENTS,
     REQUEST_COMMENTS_SUCCESS,
-    POST_COMMENTS,
-    POST_COMMENTS_SUCCESS
+    // POST_COMMENTS,
+    // POST_COMMENTS_SUCCESS,
+    // POST_LIKES_SUCCESS,
+     POST_LIKE,
+    // POST_LIKES,
+    REQUEST_LIKES_SUCCESS,
+    REQUEST_LIKES
   } from "../actions/ActionTypes";
 
 export function requestItineraries() {
@@ -23,7 +28,6 @@ export function requestItineraries() {
     };
   }
 
-  
 export function requestActivities() {
     return {
       type: REQUEST_ACTIVITIES
@@ -56,24 +60,52 @@ export function requestActivities() {
     };
   }
   
-  function postComments(data) {
-      return {
-          type: POST_COMMENTS,
-          posts: data
-      }
-  }
+//   function postComments(data) {
+//       return {
+//           type: POST_COMMENTS,
+//           posts: data
+//       }
+//   }
   
-  function postCommentsSuccess() {
-    return {
-        type: POST_COMMENTS_SUCCESS,
-    }
+//   function postCommentsSuccess() {
+//     return {
+//         type: POST_COMMENTS_SUCCESS,
+//     }
+// }
+
+export function requestLikesSuccess(data) {
+  return {
+    type: REQUEST_LIKES_SUCCESS,
+    activities: data
+  };
 }
 
+// function postLikes(data) {
+//     return {
+//         type: POST_LIKES,
+//         posts: data
+//     }
+// }
+
+// function postLikesSuccess() {
+//   return {
+//       type: POST_LIKES_SUCCESS,
+//   }
+
   
-  
+export function requestLikes() {
+  return {
+    type: REQUEST_LIKES
+  };
+}
+
+export function postLike(){
+return{
+type:POST_LIKE
+  }
+}
 
 
-  
 
   
   

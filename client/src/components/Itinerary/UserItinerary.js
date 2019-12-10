@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProfilePicture from "./ProfilePicture";
-import Likes from "./Likes";
+// import Likes from "./Likes";
 import Duration from "./Duration";
-/* import Comments from "./Comments"; */
+import PriceRange from "./PriceRange";
+import Comments from "./Comments";
 import Activities from "./Activities";
 import { Fragment } from "react";
-import Accordion from "react-bootstrap/Accordion";
-import FaIconPack from 'react-icons/lib/fa/arrow-circle-down';
-import ItineraryDetail from '../../components/Comments/ItineraryDetail';
-import ItinerariesCarousel from '../Comments/ItinerariesCarousel';
-
-
+import { Accordion } from "react-bootstrap";
+// import AccordionContainer from "./AccordionContainer";
+import FaIconPack from "react-icons/lib/fa/arrow-circle-down";
+import CasaVicens from "../../Assets/itinerary_img/CasaVicens.jpg";
+import pareja from "../../Assets/itinerary_img/pareja.jpeg";
+import unbar from "../../Assets/itinerary_img/unbar.jpeg";
+import manfan from "../../Assets/itinerary_img/manfan.jpeg";
+import mercado from "../../Assets/itinerary_img/mercado.jpeg";
+import IconButton from './IconButton';
 import {
   requestItineraries,
   requestItinerariesSuccess,
@@ -21,10 +25,6 @@ import {
   requestCommentsSuccess
 } from "../../store/actions/itineraryActions";
 import { reduxFetch } from "../../store/actions/reduxFetch";
-
-
-
-
 const mapStateToProps = state => {
   return {
     itineraries: state.itineraries.itineraries,
@@ -32,7 +32,6 @@ const mapStateToProps = state => {
     comments: state.itineraries.comments
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     requestItineraries: () =>
@@ -57,7 +56,6 @@ const mapDispatchToProps = dispatch => {
       )
   };
 };
-
 class UserItinerary extends Component {
   render() {
     const {
@@ -70,65 +68,119 @@ class UserItinerary extends Component {
       hashtags,
       comments,
       action,
-      accordionKey
+      city
     } = this.props;
-
-    const { requestActivities } = this.props;
-    const { myActivities } = this.props;
-    let filteredActivities = myActivities.filter(activities =>
-      title.includes(activities.title)
-    );
-    let renderOnClick;
-
+    // const { requestActivities } = this.props;
+    // const { myActivities } = this.props;
+    // let renderOnClick;
+    const divStyle = {
+      maxWidth: "100%",
+      height: "20vw",
+      overflow: "hidden",
+      padding: "0"
+    };
+    const imgStyle = {
+      height: "100%",
+      width: "100%",
+      objectFit: "cover"
+    };
     return (
       <Fragment>
         <div id="itineraryContainer" className="container rounded mt-1 p-2">
-          <div className="row">   
-            <ProfilePicture username={username} userimage={userimage} />
-       <h3 id={"itineraryTitle"} className="ml-1 col-4 pt-2">{title}</h3>
-            <div className="row">
-              <Likes className="col-4 mt-5" likes={likes} />
-              <Duration className="col-4" duration={duration} />
-              <span color="#fff" className="col-4 text-white">{priceRange}</span>
-              <span className="comments text-white mt-2">{hashtags}</span>
-            </div> 
-            
+        <div className="container-fluid">
+            <div className="row d-flex justify-content-start d-flex align-items-center">
+              <div className="">
+                <ProfilePicture username={username} userimage={userimage} />
+              </div>
+              <div className="">
+                <h4>Mariana Coso</h4>
+              </div>
+              <div className="itinerarystyle col-4">
+                <div className="row">
+                  <div className="col-md-12">
+                    <h3 id={"itineraryTitle"} className="pt-2 pl-3">
+                      {title}
+                    </h3>
+                  </div>
+                </div>
+                <div className="row w-100">
+                  <div className="col-4 p-0 m-0">
+                    {" "}
+                    <IconButton {...this.props}/><h3>{likes}</h3>
+                  </div>
+                  <div className="col-4 p-0 m-0">
+                    <Duration className="duration" duration={duration} />
+                  </div>
+                  <div className="col-4 m-0">
+                    <PriceRange
+                      className="priceRange"
+                      priceRange={priceRange}
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                  <span className="comments text-white mt-2">{hashtags}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="p-2">
+            <Activities title={title} />
+              {/* <Carousel
+                className="d-inline-block col-sm-10 container"
+                slideWidth={0.5}
+                cellSpacing={10}
+                slidesToShow={1.5}
+                slideOffset={1}
+                dragging={true}
+                cellAlign="left"
+              >
+                <div className="col-sm-4" style={divStyle}>
+                  <img style={imgStyle} src={CasaVicens} alt="qeeeee"/>
+                </div>
+                <div className="col-sm-4" style={divStyle}>
+                  <img style={imgStyle} src={pareja} alt="qeeeee"/>
+                </div>
+                <div className="col-sm-4" style={divStyle}>
+                  <img style={imgStyle} src={unbar} alt="qeeeee"/>
+                </div>
+                <div className="col-sm-4" style={divStyle}>
+                  <img style={imgStyle} src={manfan} alt="qeeeee"/>
+                </div>
+                <div className="col-sm-4" style={divStyle}>
+                  <img alt="qeeeee" style={imgStyle} src={mercado} />
+                </div>
+                <div className="col-sm-4" style={divStyle}>
+                  <img style={imgStyle} alt="qeeeee" src={CasaVicens} />
+                </div>
+                <div className="col-sm-4" style={divStyle}>
+                  <img style={imgStyle} src={pareja} alt="qeeeee"/>
+                </div>
+              </Carousel> */}
+            </div>
           </div>
           <Accordion>
-         
-            <Accordion.Toggle className="toggleDeco"
-              onClick={() =>
-                filteredActivities == "" ? requestActivities(title) : null
-              }
-              eventKey="0"
-            >
-                 
-              <FaIconPack className="toggleDeco mr-2 row" font-size="7vh"/>
-           
+            <Accordion.Toggle className="toggleDeco" eventKey="0">
+              {" "}
+              <FaIconPack className="toggleDeco mr-2 row" font-size="7vh" />
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
-              
               <div>
-              <ItinerariesCarousel {...this.props}></ItinerariesCarousel>  
-                <Activities
-                  activities={
-                    filteredActivities != "" && filteredActivities[0].activities
-                  }
+                <Comments
+                  comments={comments}
+                  title={title}
+                  action={action}
+                  city={city}
                 />
-                {/* <Comments comments={comments} action={action} /> */}
-          
-                  <ItineraryDetail {...this.props}/>
               </div>
             </Accordion.Collapse>
           </Accordion>
         </div>
-
-
       </Fragment>
     );
   }
 }
-
 const ReduxUserItinerary = connect(
   mapStateToProps,
   mapDispatchToProps

@@ -12,9 +12,10 @@ export const userPostFetch = user => {
         body: JSON.stringify(user)
       },(data) => { 
              if(data.success) {
-               dispatch(createUser(data))
+               localStorage.setItem("token", data.token)
+               dispatch(loginUser(data))
             }else{
-              console.log(data.msg)
+              localStorage.removeItem("token")
             }  
       }) 
     }
@@ -74,9 +75,9 @@ export const userPostFetch = user => {
       created: data.created,
   })
 
-  const createUser = data => ({
-    type: 'CREATE_USER',
-    payload: null,
-    logged: data.logged,
-    created: data.created,
-})
+//   const createUser = data => ({
+//     type: 'CREATE_USER',
+//     payload: {},
+//     logged: data.logged,
+//     created: data.created,
+// })

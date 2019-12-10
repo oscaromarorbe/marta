@@ -13,7 +13,8 @@ import {
 const mapStateToProps = state => {
   return {
     itineraries: state.itineraries.itineraries,
-    activities: state.itineraries.activities
+    activities: state.itineraries.activities,
+    reduxNavData: state.nav.navData
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -38,17 +39,19 @@ const mapDispatchToProps = dispatch => {
 };
 class FeaturedCity extends Component {
   componentDidMount() {
+    const { reduxNavData } = this.props;
     const { getItineraries } = this.props;
     getItineraries(this.props.match.params.cityName);
-   /* const { getActivities } = this.props;
-    getActivities(this.props.match.params.cityName);*/
+    /* const { getActivities } = this.props;
+    getActivities(this.props.city);*/
   }
   render() {
+    console.log(this.props);
     const { itineraries } = this.props;
     console.log(
-      `FEATURED ITINERARIES FOR ${this.props.match.params.cityName}: ${JSON.stringify(
-        itineraries
-      )}`
+      `FEATURED ITINERARIES FOR ${
+        this.props.match.params.cityName
+      }: ${JSON.stringify(itineraries)}`
     );
     const itineraryList = itineraries.map((itinerary, index) => (
       <UserItinerary
@@ -62,28 +65,29 @@ class FeaturedCity extends Component {
         accordionKey={index}
       />
     ));
-
     return (
       <Fragment>
-      <div className="singleCity container col-md-12">
-         <h1 className="featTitle">{this.props.match.params.cityName.replace(/[_]/, " ")}</h1>
-      <div className="row col-md-12">
-          <div className="col-md-3 col-sd-2">
-            <img className="featPic" src={myImages.cities[this.props.match.params.cityName]}></img>    
+        <div className="singleCity" class="container col-md-12">
+          <h1 className="featTitle">{this.props.city}</h1>
+          <div className="row col-md-12">
+            <div className="col-md-3 col-sd-2">
+              <img
+                className="featPic"
+                src={myImages.cities[this.props.match.params.cityName]}
+              ></img>
+            </div>
+            <div className="col-md-9 col-sd-14">
+              <h6 className="rounded cityDescript">
+                {myTexts.cities[this.props.match.params.cityName]}
+              </h6>
+            </div>
           </div>
-          <div className="col-md-9 col-sd-14">
-              <h6 className="rounded cityDescript">{myTexts.cities[this.props.match.params.cityName]}</h6  >
-          </div>
-      </div> 
-      <div>
-          {itineraryList}
-      </div>
-    </div>
-  </Fragment>
+          <div>{itineraryList}</div>
+        </div>
+      </Fragment>
     );
   }
 }
-
 const ReduxFeaturedCity = connect(
   mapStateToProps,
   mapDispatchToProps

@@ -7,7 +7,11 @@ import {
     REQUEST_COMMENTS,
     REQUEST_COMMENTS_SUCCESS,
     POST_COMMENTS,
-    POST_COMMENTS_SUCCESS
+    POST_COMMENTS_SUCCESS,
+    POST_LIKES,
+    POST_LIKES_SUCCESS,
+    REQUEST_LIKES,
+    // REQUEST_LIKES_SUCCESS
   } from "../actions/ActionTypes";
   
    
@@ -40,7 +44,6 @@ import {
         return Object.assign({}, state, {
           activities: action.activities,
           message: action.message || 'ACTIVITIES FETCHED'
-
         });
         case RESET_ACTIVITIES: 
         return Object.assign({}, state, {
@@ -51,24 +54,34 @@ import {
         return Object.assign({}, state, {
           comments: [],
           message: action.message || 'FETCHING COMMENTS'
-
         });
         case REQUEST_COMMENTS_SUCCESS: 
         return Object.assign({}, state, {
           comments: action.comments,
           message: action.message || 'COMMENTS FETCHED'
-
         });
         case POST_COMMENTS: 
         return Object.assign({}, state, {
-          posts: action.posts,
+          comments: action.comments,
           message: action.message || 'POSTING COMMENTS'
-
         });
         case POST_COMMENTS_SUCCESS: 
         return Object.assign({}, state, {
           message: action.message || 'COMMENTS POSTED'
-
+        });
+        case REQUEST_LIKES: 
+        return Object.assign({}, state, {
+          likes: [],
+          message: action.likes || 'FETCHING LIKES'
+        });
+        case POST_LIKES: 
+        return Object.assign({}, state, {
+          likes: action.likes,
+          message: action.message || 'POSTING LIKES'
+        });
+        case POST_LIKES_SUCCESS: 
+        return Object.assign({}, state, {
+          message: action.message || 'LIKES POSTED'
         });
 
       default:

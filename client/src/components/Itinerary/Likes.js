@@ -1,11 +1,14 @@
 import React from 'react';
 import Heart from 'react-icons/lib/fa/heart-o';
+import IconButton from './IconButton';
 
-const Likes = ({ likes }) => {
+const Likes =  props  => {
+  console.log("puto",props);
   return (
     <div>
-      <Heart  color="#fff" className=" text-white ml-3"/>
-      <span className=" text-white ml-2">{likes}</span>
+    <IconButton/>
+    
+      {/* <span className=" text-white ml-2">{likes}</span> */}
     </div>
   );
 };

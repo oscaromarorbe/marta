@@ -9,6 +9,15 @@
   height: 30vmin;
 }
 
+#savechang {
+  text-decoration: none;
+  color: white;
+}
+
+#savechang:hover {
+  text-decoration: none;
+}
+
 .App-header {
  /*  background-color:#becedf; */
   min-height: 100vh;

@@ -11,9 +11,11 @@ const ActivitySchema = new Schema({
 image:{
     type: String,
 }, 
+
 priceRange:{
 type: String,
 },
+
 hashtag:{
 type: Array,
 }});

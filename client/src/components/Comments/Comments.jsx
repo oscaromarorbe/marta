@@ -7,14 +7,19 @@ import CommentInput from "./commentInput";
 // import { EditButton } from "./editButton";
 import { CommentItem } from "./CommentItem";
 // import { Link } from "react-router-dom";
-
+​
+​
+​
+//1) Conectar con Redux, traer user(nombre y loged) (mapstatetoprops)
+​
+​
 const Comments = ({ comments, title, city }) => {
   const [posts, setPosts] = useState();
   const [rerender, setRerender] = useState(false);
   const [cantidad, setCantidad] = useState();
   // const [toUpdate, setToUpdate] = useState();
   // const [textBox, setTextBox] = useState();
-
+​
   // const unBlockRerender = () => {
   //   setRerender(!rerender);
   // };
@@ -35,14 +40,16 @@ const Comments = ({ comments, title, city }) => {
   //     () => setRerender(!rerender)
   //   );
   // };
-
+​
+  //optativo: instanciar variables de estado de redux//
+​
   const createComment = input => {
     getData(
       `/api/itineraries/byTitle/${title}/comments`,
       {
         method: "PUT",
         body: JSON.stringify({
-          username: "Anonymous",
+          username: /*user (traido desde el store de redux)*/,
           id: `${title}#${cantidad}`,
           text: input
         }),
@@ -53,7 +60,7 @@ const Comments = ({ comments, title, city }) => {
       () => setRerender(!rerender)
     );
   };
-
+​
   const deleteComment = id => {
     getData(
       `/api/itineraries/byTitle/${title}/comments/delete`,
@@ -69,17 +76,18 @@ const Comments = ({ comments, title, city }) => {
       () => setRerender(false)
     );
   };
-
+​
   const callbackRerender = value => {
     setRerender(value)
   };
-
+​
   useEffect(() => {
     // Actualiza el título del documento usando la API del navegador
     getData(`/api/itineraries/byTitle/${title}/comments`, null, data =>  {
       setPosts(
         data.comments[0].comments.map((comment, index) => (
           <Fragment>
+              {/*pasar por props si estás loggeado, para condicionar el render de "edit" */}
           <CommentItem
             key={`key#${title}#${index}`}
             cantidad={cantidad}
@@ -88,32 +96,34 @@ const Comments = ({ comments, title, city }) => {
             text={comment.text}
             id={comment.id}
             callback={callbackRerender}
+​
           />
+          {/* renderizar condicionalmente si estas loggeado*/}
           <button onClick={() => {setRerender(!rerender); deleteComment(comment.id)}}>Delete</button>
-
+​
   
           </Fragment>
         ))
       );
       setCantidad(data.cantidad);
-
+​
       console.log(data.comments[0].comments);
       console.log(data.cantidad);
     });
   }, [!rerender]);
-
+​
   return (
     <div>
       <div>
         {posts}
-
+{/*condicionar el render del comment input en funcion de que el usuario esté loggeado (usar el state de redux)  */}
         <CommentInput
           cantidad={cantidad}
           title={title}
           callback={createComment}
           placeholder={"Leave your comment"}
         ></CommentInput>
-
+​
         <div id="likeAdder"></div>
         <ul id="comments">
           {comments.map(comment => <li color="#fff">{comment}</li>) || comments}
@@ -123,4 +133,3 @@ const Comments = ({ comments, title, city }) => {
   );
 };
 export default Comments;
-

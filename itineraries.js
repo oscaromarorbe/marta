@@ -38,7 +38,7 @@ user: {
     type: Array
   },
   likes: {
-      type: Number
+      type: Array
   }
 });
 
@@ -54,7 +54,6 @@ var newItinerary = new Itinerary({
 });
 
 console.log(
-  "salve este itinerario papa!",
   newItinerary.title,
   newItinerary.ProfilePic,
   newItinerary.rating,

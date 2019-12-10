@@ -92,7 +92,7 @@ const genericGetAll = (uri, model) => {
       .then(itinerario => res.json(itinerario))
       .catch(err => console.log(err));
   });
-
+//BUSCAR TODAS LAS ACTIVIDADES DE UN ITINERARIO:
   router.get("/api/itineraries/byTitle/:title/activities", async (req, res) => {
     let itinerarioBuscado = req.params.title;
     itinerary
@@ -101,6 +101,11 @@ const genericGetAll = (uri, model) => {
       .catch(err => console.log(err));
   });
 
+
+
+ 
+ 
+ 
   router.get("/api/activities/:city", async (req, res) => {
     let activitiesByCity = [req.params.city, "Any"];
     activity
@@ -139,3 +144,75 @@ const genericGetAll = (uri, model) => {
   );
   
   const googleLogUri = "/googlelogin";
+
+
+
+
+  router.get("/api/itineraries/byTitle/:title/comments", async (req, res) => {
+    let itinerarioBuscado = req.params.title;
+    itinerary
+      .find({ title: itinerarioBuscado }, { _id: 0, title: 1, comments: 1 })
+      .then(comments => res.json({comments:comments, cantidad: comments[0].comments.length}))
+      .catch(err => console.log(err));
+  });
+
+  
+
+  router.get("/api/itineraries/comments", async (req, res) => {
+    itinerary
+      .find({}, { _id: 0, comments: 1 })
+      .then(comments => res.send(comments))
+      .catch(err => console.log(err));
+  });
+
+  router.get("/api/comments", async (req, res) => {
+    itinerary
+      .find({comments: {$exists: true, $not: {$size: 0}}}, {comments: 1 })
+      .then(items => res.json(items));
+  });
+  router.get("/api/comments/id", async (req, res) => {
+    itinerary
+      .find({comments: {$exists: true, $not: {$size: 0}} }, { comments: {$elemMatch: {id: req.body.id}} })
+      .then(items => res.json(items));
+  });
+
+  
+  router.get("/api/itineraries/byTitle/:title/comments/id", async (req, res) => {
+    let itinerarioBuscado = req.params.title;
+    itinerary
+      .find({ title: itinerarioBuscado }, { comments: {$elemMatch: {id: req.body.id}} })
+      .then(comments => res.json(comments))
+      .catch(err => console.log(err));
+  });
+
+  router.get("/api/itineraries/byTitle/:title/likes", async (req, res) => {
+    let itinerarioBuscado = req.params.title;
+    itinerary
+      .find({ title: itinerarioBuscado }, { _id: 0, title: 1, rating: 1 })
+      .then(rating => res.json(rating))
+      .catch(err => console.log(err));
+  });
+
+
+
+  // router.get("/api/likes/id", async (req, res) => {
+  //   itinerary
+  //     .find({rating: {$exists: true} }, { rating: {$elemMatch: {id: req.body.id}} })
+  //     .then(items => res.json(items));
+  // });
+
+
+  
+  router.get("/api/itineraries/likes", async (req, res) => {
+    itinerary
+      .find({}, { _id: 0, rating: 1 })
+      .then(rating => res.send(rating))
+      .catch(err => console.log(err));
+  });
+
+
+  router.get("/api/likes", async (req, res) => {
+    itinerary
+      .find({rating: {$exists: true}}, {rating: 1 })
+      .then(items => res.json(items));
+  });
